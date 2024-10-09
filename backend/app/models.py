@@ -9,7 +9,7 @@ class AnimalType(models.Model):
     """
 
     name = models.CharField(max_length=100)
-    description = models.TextField()
+    description = models.TextField(null=True, blank=True)
 
 
 class AnimalBreed(models.Model):
@@ -20,7 +20,7 @@ class AnimalBreed(models.Model):
 
     animal_type = models.ForeignKey(AnimalType, on_delete=models.DO_NOTHING, null=True, blank=True)
     name = models.CharField(max_length=100)
-    description = models.TextField()
+    description = models.TextField(null=True, blank=True)
 
 
 class Animal(models.Model):
@@ -31,7 +31,7 @@ class Animal(models.Model):
     name_id = models.CharField(max_length=100, null=True, blank=True)
     nick_name = models.CharField(max_length=100, null=True, blank=True)
     breed = models.ForeignKey(AnimalBreed, on_delete=models.DO_NOTHING, null=True, blank=True)
-    date_of_birth = models.DateTimeField()
+    date_of_birth = models.DateTimeField(null=True, blank=True)
     father = models.ForeignKey(
         "self", on_delete=models.DO_NOTHING, null=True, blank=True, related_name="father_animal"
     )
