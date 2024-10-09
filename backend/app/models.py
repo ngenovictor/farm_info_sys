@@ -2,15 +2,67 @@ from django.db import models
 
 
 # Create your models here.
-class CowBreed(models.Model):
+class AnimalType(models.Model):
+    """
+    Model for Animal Type
+    eg Cow, Goat, Sheep
+    """
+
     name = models.CharField(max_length=100)
     description = models.TextField()
 
 
-class Cow(models.Model):
-    name_id = models.CharField(max_length=100)
-    nick_name = models.CharField(max_length=100)
-    breed = models.ForeignKey(CowBreed, on_delete=models.DO_NOTHING)
+class AnimalBreed(models.Model):
+    """
+    Model for Animal Breed
+    eg Jersey, Friesian, Merino
+    """
+
+    animal_type = models.ForeignKey(AnimalType, on_delete=models.DO_NOTHING, null=True, blank=True)
+    name = models.CharField(max_length=100)
+    description = models.TextField()
+
+
+class Animal(models.Model):
+    """
+    Model for Animal
+    """
+
+    name_id = models.CharField(max_length=100, null=True, blank=True)
+    nick_name = models.CharField(max_length=100, null=True, blank=True)
+    breed = models.ForeignKey(AnimalBreed, on_delete=models.DO_NOTHING, null=True, blank=True)
     date_of_birth = models.DateTimeField()
     father = models.ForeignKey("self", on_delete=models.DO_NOTHING, null=True, blank=True)
     mother = models.ForeignKey("self", on_delete=models.DO_NOTHING, null=True, blank=True)
+
+
+class AnimalPurchase(models.Model):
+    """
+    Model for Animal Purchase
+    """
+
+    animal = models.ForeignKey(Animal, on_delete=models.DO_NOTHING)
+    date_of_purchase = models.DateTimeField()
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    buyer = models.CharField(max_length=100)
+    buyer_contact = models.CharField(max_length=100)
+    buyer_address = models.TextField()
+    seller = models.CharField(max_length=100)
+    seller_contact = models.CharField(max_length=100)
+    seller_address = models.TextField()
+
+
+class AnimalSale(models.Model):
+    """
+    Model for Animal Sale
+    """
+
+    animal = models.ForeignKey(Animal, on_delete=models.DO_NOTHING)
+    date_of_sale = models.DateTimeField()
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    buyer = models.CharField(max_length=100)
+    buyer_contact = models.CharField(max_length=100)
+    buyer_address = models.TextField()
+    seller = models.CharField(max_length=100)
+    seller_contact = models.CharField(max_length=100)
+    seller_address = models.TextField()
