@@ -11,6 +11,9 @@ class AnimalType(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField(null=True, blank=True)
 
+    def __str__(self) -> str:
+        return self.name
+
 
 class AnimalBreed(models.Model):
     """
@@ -21,6 +24,9 @@ class AnimalBreed(models.Model):
     animal_type = models.ForeignKey(AnimalType, on_delete=models.DO_NOTHING, null=True, blank=True)
     name = models.CharField(max_length=100)
     description = models.TextField(null=True, blank=True)
+
+    def __str__(self) -> str:
+        return f"{self.name} {self.animal_type.name}"
 
 
 class Animal(models.Model):
@@ -38,6 +44,16 @@ class Animal(models.Model):
     mother = models.ForeignKey(
         "self", on_delete=models.DO_NOTHING, null=True, blank=True, related_name="mother_animal"
     )
+
+    def __str__(self) -> str:
+        if self.name_id and self.nick_name:
+            return f"{self.name_id} ({self.nick_name})"
+        if self.nick_name:
+            return self.nick_name
+        elif self.name_id:
+            return self.name_id
+        else:
+            return "id: " + str(self.id)
 
 
 class AnimalPurchase(models.Model):
