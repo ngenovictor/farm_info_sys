@@ -1,0 +1,33 @@
+services:
+  db:
+    restart: always
+    image: postgis/postgis:16-3.4-alpine
+    expose:
+      - 5432
+    environment:
+      POSTGRES_USER: farmisys
+      POSTGRES_PASSWORD: $POSTGRES_PASSWORD
+      POSTGRES_DB: farmisys_db
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+  backend:
+    depends_on:
+      - db
+    build:
+      context: .
+      dockerfile: backend/build/Dockerfile
+
+    environment:
+      POSTGRES_USER: farmisys
+      POSTGRES_PASSWORD: $POSTGRES_PASSWORD
+      POSTGRES_DB: farmisys_db
+      POSTGRES_HOST: db
+      POSTGRES_PORT: 5432
+      SECRET_KEY: $SECRET_KEY
+      DEBUG: $DEBUG
+    ports:
+      - "8000:8000"
+
+volumes:
+  db-data:
