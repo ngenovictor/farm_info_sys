@@ -32,8 +32,12 @@ class Animal(models.Model):
     nick_name = models.CharField(max_length=100, null=True, blank=True)
     breed = models.ForeignKey(AnimalBreed, on_delete=models.DO_NOTHING, null=True, blank=True)
     date_of_birth = models.DateTimeField()
-    father = models.ForeignKey("self", on_delete=models.DO_NOTHING, null=True, blank=True)
-    mother = models.ForeignKey("self", on_delete=models.DO_NOTHING, null=True, blank=True)
+    father = models.ForeignKey(
+        "self", on_delete=models.DO_NOTHING, null=True, blank=True, related_name="father_animal"
+    )
+    mother = models.ForeignKey(
+        "self", on_delete=models.DO_NOTHING, null=True, blank=True, related_name="mother_animal"
+    )
 
 
 class AnimalPurchase(models.Model):
