@@ -34,10 +34,11 @@ class Animal(models.Model):
     Model for Animal
     """
 
-    name_id = models.CharField(max_length=100, null=True, blank=True)
+    name_id = models.CharField(max_length=100, unique=True, null=True, blank=True)
     nick_name = models.CharField(max_length=100, null=True, blank=True)
     breed = models.ForeignKey(AnimalBreed, on_delete=models.DO_NOTHING, null=True, blank=True)
     date_of_birth = models.DateTimeField(null=True, blank=True)
+    sex = models.CharField(max_length=1, choices=[("M", "Male"), ("F", "Female")])
     father = models.ForeignKey(
         "self", on_delete=models.DO_NOTHING, null=True, blank=True, related_name="father_animal"
     )
@@ -86,3 +87,22 @@ class AnimalSale(models.Model):
     seller = models.CharField(max_length=100)
     seller_contact = models.CharField(max_length=100)
     seller_address = models.TextField()
+
+
+# Feeds
+# Disease management
+# Vaccination
+# Milk production
+# Meat production
+# Wool production
+# Egg production
+# Fodder management
+# Animal weight management
+# Animal health management
+# Animal breeding management
+# Animal purchase management
+# Animal sale management
+# Breeding
+# Production
+# feeding
+# financial
