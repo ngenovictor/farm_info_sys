@@ -38,7 +38,9 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django.contrib.gis",
     "animals.apps.AnimalsConfig",
+    "land.apps.LandConfig",
 ]
 
 MIDDLEWARE = [
