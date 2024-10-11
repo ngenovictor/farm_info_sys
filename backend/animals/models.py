@@ -57,6 +57,40 @@ class Animal(models.Model):
             return "id: " + str(self.id)
 
 
+class AnimalHeatEvent(models.Model):
+    """
+    Model for Animal Heat Event
+    """
+
+    animal = models.ForeignKey(Animal, on_delete=models.DO_NOTHING)
+    date = models.DateTimeField()
+    duration = models.DurationField()
+    notes = models.TextField(null=True, blank=True)
+
+
+class AnimalServedEvent(models.Model):
+    animal = models.ForeignKey(Animal, on_delete=models.DO_NOTHING)
+    date = models.DateTimeField()
+    serve_type = models.CharField(
+        max_length=20, choices=[("AI", "Artificial Insemination"), ("Bull", "Natural Bull")]
+    )
+    genetics = models.ForeignKey(to=AnimalBreed, on_delete=models.DO_NOTHING)
+    notes = models.TextField(null=True, blank=True)
+
+    def __str__(self) -> str:
+        return f"{self.animal}"
+
+
+# class AnimalImage(models.Model):
+#     image = models.ImageField(upload_to="")
+
+
+# class AnimalNoteEvent(models.Model):
+#     date = models.DateTimeField(auto_now_add=True)
+#     notes = models.TextField(null=True, blank=True)
+#     images = models.ForeignKey(to=AnimalImage, on_delete=models.CASCADE)
+
+
 class AnimalPurchase(models.Model):
     """
     Model for Animal Purchase
