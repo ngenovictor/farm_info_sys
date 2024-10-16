@@ -39,6 +39,9 @@ class Animal(models.Model):
     nick_name = models.CharField(max_length=100, null=True, blank=True)
     breed = models.ForeignKey(AnimalBreed, on_delete=models.DO_NOTHING, null=True, blank=True)
     date_of_birth = models.DateTimeField(null=True, blank=True)
+    date_of_birth_approximate = models.DateTimeField(
+        null=True, blank=True
+    )  # to be used when age is not accurately known
     sex = models.CharField(max_length=1, choices=[("M", "Male"), ("F", "Female")])
     father = models.ForeignKey(
         "self", on_delete=models.DO_NOTHING, null=True, blank=True, related_name="father_animal"
