@@ -48,24 +48,12 @@ def compute_age(obj, field_name):
 @admin.register(Animal)
 class AnimalAdmin(admin.ModelAdmin):
     def age(self, obj):
-        if obj.date_of_birth is None:
-            return None
-        age_in_years = datetime.datetime.now().year - obj.date_of_birth.year
-        if age_in_years == 0:
-            age_in_months = datetime.datetime.now().month - obj.date_of_birth.month
-            if age_in_months == 0:
-                age_in_days = datetime.datetime.now().day - obj.date_of_birth.day
-                if age_in_days == 0:
-                    return "Today"
-                elif age_in_days == 1:
-                    return f"{age_in_days} day"
-                return f"{age_in_days} days"
-            elif age_in_months == 1:
-                return f"{age_in_months} month"
-            return f"{age_in_months} months"
-        elif age_in_years == 1:
-            return f"{age_in_years} year"
-        return f"{age_in_years} years"
+        age = compute_age(obj, "date_of_birth")
+        if age is None:
+            approx_age = compute_age(obj, "date_of_birth_approximate")
+            if approx_age is not None:
+                return approx_age + " (approx)"
+        return age
 
     list_display = (
         "name_id",
@@ -100,7 +88,8 @@ class AnimalServedEventAdmin(admin.ModelAdmin):
         return compute_age(obj, "date")
 
     def expected_delivery_date(self, obj):
-        return obj.date + datetime.timedelta(days=283)
+        gestation_period_days = obj.animal.breed.animal_type.gestation_period_days
+        return obj.date + datetime.timedelta(days=gestation_period_days)
 
     list_display = (
         "animal",
