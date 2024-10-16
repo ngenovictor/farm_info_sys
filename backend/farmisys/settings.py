@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib.gis",
+    "leaflet",
     "animals.apps.AnimalsConfig",
     "land.apps.LandConfig",
 ]
@@ -129,3 +130,40 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+
+# leaflet settings
+MAPBOX_ACCESS_TOKEN = "pk.eyJ1Ijoibmdlbm92aWN0b3IzMjEiLCJhIjoiY2lmeWhzejVlMDJoaXU0bHp2NDcza2NteiJ9.xbQkW7UhxjnDXZT9ZQS1Rg"
+LEAFLET_CONFIG = {
+    "DEFAULT_CENTER": (51.0, 10.0),
+    # "DEFAULT_ZOOM": 6,
+    # allow to zoom out to see the whole world
+    "MIN_ZOOM": 0,
+    # allow to zoom in to see 1m level
+    "MAX_ZOOM": 20,
+    # "MIN_ZOOM": 3,
+    # "MAX_ZOOM": 18,
+    "SCALE": "metric",
+    "TILES": [
+        (
+            "OpenStreetMap",
+            "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+            "Attribution",
+        ),
+        (
+            "Esri World Imagery",
+            "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+            "Attribution",
+        ),
+        (
+            "Mapbox Satellite Streets",
+            # $ curl "https://api.mapbox.com/v4/mapbox.mapbox-streets-v8/1/0/0.mvt?access_token=pk.eyJ1Ijoibmdlbm92aWN0b3IzMjEiLCJhIjoiY2lmeWhzejVlMDJoaXU0bHp2NDcza2NteiJ9.xbQkW7UhxjnDXZT9ZQS1Rg"
+            f"https://api.mapbox.com/styles/v1/{{id}}/tiles/{{z}}/{{x}}/{{y}}?access_token={MAPBOX_ACCESS_TOKEN}",
+            "Attribution",
+        ),
+    ],
+    "PLUGINS": {
+        # add a plugin to the map to get current location of user
+        "location": {"autoCenter": True},
+    },
+}
