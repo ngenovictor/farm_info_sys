@@ -13,8 +13,5 @@ COPY backend/build/requirements.txt .
 RUN venv/bin/python -m pip install -r requirements.txt
 
 COPY backend /app
-# venv/bin/python manage.py collectstatic --noinput && \
 
-CMD ["bash", "-c", \
-    "venv/bin/python manage.py migrate && \
-    venv/bin/python -m gunicorn farmisys.wsgi --bind 0.0.0.0:8000"]
+CMD ["bash", "build/start_server.sh"]
