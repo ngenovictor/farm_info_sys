@@ -85,7 +85,7 @@ DATABASES = {
         "USER": "farmisys",
         "PORT": 5432,
         "PASSWORD": os.environ["POSTGRES_PASSWORD"],
-        "HOST": "localhost",
+        "HOST": "db",
     },
 }
 
