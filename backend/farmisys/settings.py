@@ -27,6 +27,7 @@ SECRET_KEY = os.environ["SECRET_KEY"]
 DEBUG = os.environ.get("DEBUG", "False") == "True"
 
 ALLOWED_HOSTS = ["farmisys.victorngeno.com"]
+CSRF_TRUSTED_ORIGINS = ["farmisys.victorngeno.com"]
 
 if DEBUG:
     ALLOWED_HOSTS.append("localhost")
