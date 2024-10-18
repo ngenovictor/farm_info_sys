@@ -26,7 +26,10 @@ SECRET_KEY = os.environ["SECRET_KEY"]
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DEBUG", "False") == "True"
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["farmisys.victorngeno.com"]
+
+if DEBUG:
+    ALLOWED_HOSTS.append("localhost")
 
 
 # Application definition
